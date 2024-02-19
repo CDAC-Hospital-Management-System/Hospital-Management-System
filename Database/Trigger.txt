@@ -1,0 +1,36 @@
+
+CREATE TABLE `patients_history` 
+(
+  `id` int NOT NULL AUTO_INCREMENT primary key,
+  `user_id` int DEFAULT NULL,
+  `ward_id` int DEFAULT NULL,
+  `doctor_id` int DEFAULT NULL,
+  `date_of_admission` date DEFAULT NULL,
+  `blood_group` varchar(45) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `prescription` varchar(2000) DEFAULT NULL,
+  `bed_alloted` int DEFAULT NULL,
+  `payment_status` varchar(45) DEFAULT NULL,
+  `patient_problem` varchar(100) DEFAULT NULL,
+ `paymentDate` DATE DEFAULT NULL
+ 
+);
+
+
+DELIMITER //
+
+CREATE TRIGGER patienthistory
+AFTER DELETE 
+ON patients FOR EACH ROW
+BEGIN
+  
+    INSERT INTO patients_history 
+    VALUES (old.id, old.user_id, old.ward_id, old.doctor_id, old.date_of_admission, old.blood_group, old.dob, old.prescription, old.bed_alloted, old.payment_status, old.patient_problem,old.paymentDate);
+END //
+
+DELIMITER ;
+
+
+
+
+
